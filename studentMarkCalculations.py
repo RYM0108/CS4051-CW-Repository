@@ -16,9 +16,17 @@ def student_marks():
         if str(user.lower()) == "done": break
 
         try: #Run this code to handle errors if they occur
-            s_mark = int(user) #Convert the string into an integer.
-            marks.append(s_mark) #ADD the student marks into the list by converting the string to integer
-        except ValueError: #Runs if a ValueError occurs (e.g., invalid number input)
+
+          #Allow the user to insert multiple numbers with commas or simply without commads (e.g., "1, 2, 3" or 12)
+          string_list = user.replace(" ", "").split(",") #Manipulate the string by replacing space string with a empty string before splitting. Split the string to cut unwanted commas with the delimiter as ","
+          filtered_list = list(filter(lambda element: element != "", string_list)) #Filter in elements that doesn't contain any empty strings
+          integer_list = list(map(lambda elem: int(elem), filtered_list)) #Convert the String elements into integer elements and do not accpet any non-integers
+          
+          #Loop over the integer list before adding each element into the marks list for further calculations
+          for i in range(0, len(integer_list)):
+                marks.append(integer_list[i]) #Add each Student mark numbers into the list
+
+        except ValueError: #Runs if a ValueError occurs (e.g., invalid number input such as  [1, 2, 3], HelloWorld, "Test", 2.5)
             print("Invalid input. Please enter a number only.") #Run the print statement onto the terminal
 
 student_marks() #Call the function to enter the student marks on the terminal window
@@ -99,7 +107,7 @@ while True:
         print("\nPress 4 to Go back and enter a NEW set of numbers")
         print("\nPress 5 to Exit the application ")
         print("\nPress 6 Print out the Skewness value")
-
+        print("\nPress 7 to enter more numbers")
     choice()  #Call the function to output the user choices onoto the terminal window
 
     choice = int(input("\nEnter your choice: "))  #The user should enter a choice of 1, 2, 3, 4, or 5
@@ -127,4 +135,12 @@ while True:
     elif choice == 6: #The user types 6 to become True
         print(skewness()) #Call the function to print out the skewness value
         break #Exit the loop immediately
+    
+    elif choice == 7: #The user types 7 to become True
+        student_marks() #The function is called back to enter more student marks
+        print(marks) #Print out the updated marks list once the user entered more numbers without removing every single element
 
+
+
+
+    
